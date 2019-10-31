@@ -1,10 +1,12 @@
 
+import 'package:dndlion/model/Character.dart';
 import 'package:dndlion/view/tabs/character/CharacterWidget.dart';
 import 'package:flutter/material.dart';
 
 class TabBarHome{
 
   DefaultTabController _tabController;
+  Character character = Character();
 
   TabBarHome(){
     _initTabBarHome();
@@ -12,7 +14,7 @@ class TabBarHome{
 
   void _initTabBarHome(){
     _tabController = DefaultTabController(
-      length: 2,
+      length: 1,
       child: _buildChild(),
     );
   }
@@ -36,7 +38,6 @@ class TabBarHome{
     return TabBar(
       tabs: <Widget>[
         Tab(icon: Icon(Icons.person)),
-        Tab(icon: Icon(Icons.person))
       ],
     );
   }
@@ -44,8 +45,7 @@ class TabBarHome{
   TabBarView _buildBody(){
     return TabBarView(
       children: <Widget>[
-        CharacterWidget(),
-        CharacterWidget(),
+        CharacterWidget(character: character),
       ],
     );
   }

@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 
 class CharacterWidget extends StatefulWidget {
 
-  final Character _character = Character();
+  final Character character;
+
+  const CharacterWidget({Key key, this.character}): super(key: key);
 
   @override
   CharacterState createState() {
-    return CharacterState(_character);
+    return CharacterState(character);
   }
 
 }

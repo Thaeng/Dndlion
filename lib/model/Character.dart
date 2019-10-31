@@ -3,6 +3,7 @@ import 'package:dndlion/model/Health.dart';
 import 'package:dndlion/model/Skill.dart';
 import 'package:dndlion/model/Stat.dart';
 import 'package:dndlion/model/StatNames.dart';
+import 'package:flutter/cupertino.dart';
 
 class Character {
 
@@ -19,15 +20,19 @@ class Character {
 
   List<Stat> _stats;
   int _proficiencyBonus;
+  Health _health;
+
   int armorClass;
   int speed;
-  Health _health;
+  String name;
+  Image image = Image.network('https://cache.desktopnexus.com/thumbseg/2015/2015317-bigthumbnail.jpg');
 
   Character(){
     this._stats = createStats();
     this._proficiencyBonus = 2;
     this.armorClass = 10;
     this.speed = 30;
+    this.name = "Daniel";
     this._health = Health(0);
 
     updateSkills();
@@ -55,6 +60,10 @@ class Character {
 
   void updateSkills(){
     _stats.forEach((stat) => stat.updateSkills(_proficiencyBonus));
+  }
+
+  Stat getStatByName(String statName){
+    return stats.singleWhere((stat) => statName == stat.name, orElse: () => null);
   }
 
   void increaseStatByOne(String statName){

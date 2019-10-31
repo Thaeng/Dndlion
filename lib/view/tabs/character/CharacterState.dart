@@ -24,13 +24,65 @@ class CharacterState extends State<CharacterWidget> {
   }
 
   Widget _buildBody(){
+    List<Widget> widgets = _buildCharacterView();
     ListView listView = ListView.builder(
-        itemCount: _character.stats.length * 2 + 1,
-        itemBuilder: (context, i){
+        itemCount: widgets.length * 2,
+        itemBuilder: (context, i) {
           if(i.isOdd) return Divider();
-          return _buildRow(i);
+          return widgets[i ~/ 2];
+          //return _buildRow(i);
     });
     return listView;
+  }
+
+  List<Widget> _buildCharacterView(){
+    List<Widget> widgets = List();
+
+    widgets.add(_buildCharacterName());
+    widgets.add(_character.image);
+    widgets.add(_buildProficiencyAndArmorClass());
+    _character.stats.forEach((stat) => widgets.add(_buildPrimaryStat(stat)));
+
+    return widgets;
+  }
+
+  Widget _buildCharacterName(){
+    return ListTile(
+      title: Center(
+        child: Text(_character.name.toString()),
+      ),
+    );
+  }
+
+  Widget _buildProficiencyAndArmorClass(){
+    return ListTile(
+      leading: Text('Proficiency:' + _character.proficiencyBonus.toString()),
+      trailing: Text('AC:' + _character.armorClass.toString()),
+    );
+  }
+
+  Widget _buildPrimaryStat(Stat stat){
+    ExpansionTile listTile = ExpansionTile(
+      title: _createTitleFromStat(stat),
+      children: _buildSkills(stat),
+      leading: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          setState(() {
+            _character.increaseStatByOne(stat.name);
+          });
+        },
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.remove),
+        onPressed: () {
+          setState(() {
+            _character.decreaseStatByOne(stat.name);
+          });
+        },
+      ),
+    );
+    return listTile;
   }
 
   Widget _buildRow(int index){
