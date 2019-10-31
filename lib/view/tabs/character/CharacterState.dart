@@ -30,7 +30,6 @@ class CharacterState extends State<CharacterWidget> {
         itemBuilder: (context, i) {
           if(i.isOdd) return Divider();
           return widgets[i ~/ 2];
-          //return _buildRow(i);
     });
     return listView;
   }
@@ -49,7 +48,7 @@ class CharacterState extends State<CharacterWidget> {
   Widget _buildCharacterName(){
     return ListTile(
       title: Center(
-        child: Text(_character.name.toString()),
+        child: Text(_character.name.toString(), style: TextStyle(fontSize: 40.0),),
       ),
     );
   }
@@ -85,35 +84,6 @@ class CharacterState extends State<CharacterWidget> {
     return listTile;
   }
 
-  Widget _buildRow(int index){
-    if(index == 0){
-      return Image.network('https://cache.desktopnexus.com/thumbseg/2015/2015317-bigthumbnail.jpg');
-    }
-
-
-    final Stat stat = _character.stats[index ~/ 2 - 1];
-    ExpansionTile listTile = ExpansionTile(
-      title: _createTitleFromStat(stat),
-      children: _buildSkills(stat),
-      leading: IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            _character.increaseStatByOne(stat.name);
-          });
-        },
-      ),
-      trailing: IconButton(
-        icon: Icon(Icons.remove),
-        onPressed: () {
-          setState(() {
-            _character.decreaseStatByOne(stat.name);
-          });
-        },
-      ),
-    );
-    return listTile;
-  }
 
   Text _createTitleFromStat(Stat stat){
     return Text(stat.name + " : " + stat.value.toString());
