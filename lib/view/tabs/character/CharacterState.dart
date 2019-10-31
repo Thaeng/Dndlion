@@ -8,8 +8,8 @@ class CharacterState extends State<CharacterWidget> {
 
   Character _character;
 
-  CharacterState(){
-    this._character = Character();
+  CharacterState(Character character){
+    this._character = character;
   }
 
   @override
