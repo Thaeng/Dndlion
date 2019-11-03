@@ -3,6 +3,7 @@ import 'package:dndlion/model/Health.dart';
 import 'package:dndlion/model/Skill.dart';
 import 'package:dndlion/model/Stat.dart';
 import 'package:dndlion/model/StatNames.dart';
+import 'package:dndlion/model/inventory/Inventory.dart';
 import 'package:flutter/cupertino.dart';
 
 class Character {
@@ -22,10 +23,11 @@ class Character {
   int _proficiencyBonus;
   Health _health;
 
+  Inventory inventory = Inventory();
   int armorClass;
   int speed;
   String name;
-  Image image = Image.network('https://cache.desktopnexus.com/thumbseg/2015/2015317-bigthumbnail.jpg');
+  Image image = Image(image: AssetImage('resources/template.jpg'));
 
   Character(){
     this._stats = createStats();
@@ -33,7 +35,7 @@ class Character {
     this.armorClass = 10;
     this.speed = 30;
     this.name = "Daniel";
-    this._health = Health(0);
+    this._health = Health.initWith(20,15,0);
 
     updateSkills();
   }
@@ -42,12 +44,12 @@ class Character {
   List<Stat> createStats(){
     List<Stat> stats = List();
 
-    stats.add(Stat(StatNames.Strength.toString(), _baseStatValue, createSkills(_strengthSkills)));
-    stats.add(Stat(StatNames.Dexterity.toString(), _baseStatValue, createSkills(_dexteritySkills)));
-    stats.add(Stat(StatNames.Constitution.toString(), _baseStatValue, createSkills(_constitutionSkills)));
-    stats.add(Stat(StatNames.Intelligence.toString(), _baseStatValue, createSkills(_intelligenceSkills)));
-    stats.add(Stat(StatNames.Wisdom.toString(), _baseStatValue, createSkills(_wisdomSkills)));
-    stats.add(Stat(StatNames.Charisma.toString(), _baseStatValue, createSkills(_charismaSkills)));
+    stats.add(Stat(StatNames.strength.toString(), _baseStatValue, createSkills(_strengthSkills)));
+    stats.add(Stat(StatNames.dexterity.toString(), _baseStatValue, createSkills(_dexteritySkills)));
+    stats.add(Stat(StatNames.constitution.toString(), _baseStatValue, createSkills(_constitutionSkills)));
+    stats.add(Stat(StatNames.intelligence.toString(), _baseStatValue, createSkills(_intelligenceSkills)));
+    stats.add(Stat(StatNames.wisdom.toString(), _baseStatValue, createSkills(_wisdomSkills)));
+    stats.add(Stat(StatNames.charisma.toString(), _baseStatValue, createSkills(_charismaSkills)));
 
     return stats;
   }
@@ -78,6 +80,10 @@ class Character {
     if(stat == null) return;
     stat.decreaseByOne();
     stat.updateSkills(_proficiencyBonus);
+  }
+
+  void takeDamage(int amount){
+    health.takeDamage(amount);
   }
 
   // ### Getter ###

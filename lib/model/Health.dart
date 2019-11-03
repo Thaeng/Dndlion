@@ -23,5 +23,8 @@ class Health {
 
   int get max => _max;
 
+  void takeDamage(int damage){
+    _current -= damage;
+  }
 
 }

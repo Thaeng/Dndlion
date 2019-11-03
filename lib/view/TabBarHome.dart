@@ -1,21 +1,23 @@
 
 import 'package:dndlion/model/Character.dart';
 import 'package:dndlion/view/tabs/character/CharacterWidget.dart';
+import 'package:dndlion/view/tabs/inventory/InventoryWidget.dart';
 import 'package:flutter/material.dart';
 
 class TabBarHome{
 
   DefaultTabController _tabController;
-  Character character = Character();
+  Character _character;
 
-  TabBarHome(){
-    _initTabBarHome();
+  TabBarHome(Character character, BuildContext context){
+    this._character = character;
+    _initTabBarHome(context);
   }
 
-  void _initTabBarHome(){
+  void _initTabBarHome(BuildContext context){
     _tabController = DefaultTabController(
-      length: 1,
-      child: _buildChild(),
+      length: 2,
+      child: _buildChild(context),
     );
   }
 
@@ -23,21 +25,22 @@ class TabBarHome{
     return this._tabController;
   }
 
-  Scaffold _buildChild(){
+  Scaffold _buildChild(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: SafeArea(
-          child: _buildTabBar(),
+          child: _buildTabBar(context),
         ),
       ),
       body: _buildBody(),
     );
   }
 
-  TabBar _buildTabBar(){
+  TabBar _buildTabBar(BuildContext context){
     return TabBar(
       tabs: <Widget>[
-        Tab(icon: Icon(Icons.person)),
+        Tab(icon: Icon(Icons.person, color: Theme.of(context).primaryIconTheme.color)),
+        Tab(icon: Icon(Icons.calendar_today, color: Theme.of(context).primaryIconTheme.color)),
       ],
     );
   }
@@ -45,7 +48,8 @@ class TabBarHome{
   TabBarView _buildBody(){
     return TabBarView(
       children: <Widget>[
-        CharacterWidget(character: character),
+        CharacterWidget(character: _character),
+        InventoryWidget(inventory: _character.inventory),
       ],
     );
   }
