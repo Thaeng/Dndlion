@@ -7,6 +7,7 @@ class Item {
  String line1;
  String line2;
  ItemType type;
+ Map<String, int> bonuses = new Map();
 
  Item();
 

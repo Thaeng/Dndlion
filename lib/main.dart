@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dndlion',
-      theme: _buildTheme(),
+      //theme: _buildTheme(),
       home: TabBarHome(_character, context).getHome(),
     );
   }
